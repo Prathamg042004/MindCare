@@ -1,0 +1,3131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Platform</title>
+    <style>
+        :root {
+            --primary-color: #5b6af5;
+            --primary-light: #e1e4ff;
+            --primary-dark: #3949cc;
+            --secondary-color: #27ae60;
+            --accent-color: #ff7675;
+            --background-color: #f9fafe;
+            --card-background: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-light: #888888;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --error-color: #e74c3c;
+            --border-radius: 10px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --max-width: 1200px;
+            --header-height: 70px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .auth-container {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            max-width: 450px;
+            margin: 40px auto;
+            transition: var(--transition);
+        }
+        
+        .auth-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background: #1e8449;
+        }
+        
+        .btn-link {
+            background: transparent;
+            color: var(--primary-color);
+            padding: 0;
+            text-decoration: underline;
+        }
+        
+        .btn-link:hover {
+            background: transparent;
+            color: var(--primary-dark);
+            transform: none;
+        }
+        
+        .auth-switch {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .auth-switch a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+        
+    
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(91, 106, 245, 0.15);
+            border: 1px solid var(--primary-light);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: var(--primary-light);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--primary-color);
+        }
+        
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        #chat-interface {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+        
+        .chat-header {
+            padding: 15px 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-header h2 {
+            margin: 0 auto;
+            color: white;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .message.user .message-content {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 18px 18px 0 18px;
+        }
+        
+        .message.bot .message-content {
+            background: #f2f2f2;
+            color: var(--text-primary);
+            border-radius: 18px 18px 18px 0;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        .chat-input button {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }   
+        #music-therapy-interface,
+        #video-therapy-interface {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            max-width: 900px;
+            margin: 0 auto;
+            min-height: 80vh;
+        }
+        
+        .therapy-header {
+            padding: 15px 20px;
+            background: var(--primary-color);                               
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .therapy-header h2 {
+            margin: 0 auto;
+            color: white;
+        }
+        
+        .therapy-content {
+            padding: 25px;
+        }
+        
+        .therapy-categories {
+            margin-bottom: 25px;
+        }
+        
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .therapy-category {
+            background: #f2f2f2;
+            color: var(--text-primary);
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .therapy-category.active,
+        .therapy-category:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .music-player {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+        }
+        
+        .current-track {
+            margin-bottom: 15px;
+        }
+        
+        #audio-player {
+            width: 100%;
+        }
+        
+        .track-list,
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 15px;
+        }
+        
+        .track,
+        .video {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .track:hover,
+        .video:hover {
+            background: #f0f0f0;
+        }
+        
+        .track-info,
+        .video-info {
+            flex: 1;
+        }
+        
+        .track-info h4,
+        .video-info h4 {
+            margin: 0 0 5px;
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+        
+        .track-info p,
+        .video-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .play-track,
+        .play-video {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .play-track:hover,
+        .play-video:hover {
+            background: var(--primary-dark);
+        }
+        
+        .video-container {
+            margin-bottom: 25px;
+        }
+        
+        #video-player {
+            height: 400px;
+            background: #f2f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+        
+        .placeholder-video {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .consultation-intro {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .therapist-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .therapist-card {
+            display: flex;
+            background: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            gap: 20px;
+            align-items: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .therapist-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .therapist-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .therapist-img-small {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .therapist-info {
+            flex: 1;
+        }
+        
+        .therapist-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .therapist-title {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .therapist-exp, 
+        .therapist-spec, 
+        .therapist-lang {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+        }
+        
+        .therapist-rating {
+            color: #f39c12;
+            margin-top: 5px;
+        }
+        
+        .rating-count {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        
+        .selected-therapist-summary {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--primary-light);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+        
+        .consultation-steps {
+            margin-top: 30px;
+        }
+        
+        .step {
+            margin-bottom: 30px;
+        }
+        
+        .step h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .step h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .calendar-container {
+            margin-bottom: 30px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: bold;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-day:hover:not(.unavailable) {
+            background: var(--primary-light);
+        }
+        
+        .calendar-day.selected {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .calendar-day.unavailable {
+            color: var(--text-light);
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+        
+        .time-slots-container {
+            margin-bottom: 30px;
+        }
+        
+        .time-slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .time-slot {
+            padding: 8px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .time-slot:hover:not(.unavailable) {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+        }
+        
+        .time-slot.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .time-slot.unavailable {
+            color: var(--text-light);
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .consultation-summary {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+        }
+        
+        .consultation-summary h4 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .summary-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .summary-label {
+            min-width: 120px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        .confirmation-message {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .confirmation-icon {
+            font-size: 3rem;
+            color: var(--success-color);
+            background: rgba(39, 174, 96, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        #back-to-features {
+            margin-top: 20px;
+        }
+        #live-video-call-interface {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .video-call-header {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .video-call-header h2 {
+            margin: 0 auto;
+            color: white;
+            font-size: 1.3rem;
+        }
+        
+        .video-call-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-grid {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
+        }
+        
+        .video-participant {
+            width: 45%;
+            height: calc(100% - 100px);
+            min-width: 300px;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .video-stream {
+            width: 100%;
+            height: 100%;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .video-stream video, 
+        .video-stream img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px !important;
+            height: 120px !important;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .participant-name {
+            margin-top: 10px;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0,0,0,0.7);
+        }
+        
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background: #444;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: #555;
+        }
+        
+        .control-btn.muted,
+        .control-btn.video-off {
+            background: #d32f2f;
+        }
+        
+        .control-icon {
+            font-size: 24px;
+        }
+        
+        .end-call {
+            background: #d32f2f;
+        }
+        
+        .end-call:hover {
+            background: #b71c1c;
+        }
+        
+        .call-chat-panel {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 100px;
+            width: 300px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .call-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .call-chat-input {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .call-chat-input input {
+            flex: 1;
+            padding: 8px 10px;
+            border: none;
+            border-radius: 20px 0 0 20px;
+        }
+        
+        .call-chat-input button {
+            padding: 8px 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+        }
+        
+        .chat-message {
+            padding: 8px 12px;
+            border-radius: 16px;
+            max-width: 80%;
+            word-break: break-word;
+        }
+        
+        .chat-message.doctor {
+            align-self: flex-start;
+            background: #444;
+        }
+        
+        .chat-message.user {
+            align-self: flex-end;
+            background: var(--primary-color);
+        }
+        
+        /* For small screens */
+        @media (max-width: 768px) {
+            .video-grid {
+                flex-direction: column;
+            }
+            
+            .video-participant {
+                width: 100%;
+                height: 45%;
+            }
+            
+            .video-controls {
+                padding: 10px;
+            }
+            
+            .control-btn {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .call-chat-panel {
+                width: 100%;
+                height: 40%;
+                bottom: 90px;
+                top: auto;
+            }
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .profile-photo-section, .doctor-photo-section {
+            margin: 20px 0;
+        }
+        
+        .profile-photo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        
+        #current-profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+        
+        .photo-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        #camera-container {
+            margin: 15px 0;
+        }
+        
+        #camera-preview {
+            width: 100%;
+            height: 300px;
+            background-color: #222;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+        
+        .doctor-photos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .doctor-photo-option {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .doctor-photo-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .doctor-photo-option.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        
+        .settings-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-secondary {
+            background-color: #888;
+        }
+
+        #settings-btn {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MindCare</h1>
+            <p>Your Mental Health Companion</p>
+        </div>
+        
+        <div class="auth-container" id="auth-container">
+            <h2>Welcome to MindCare</h2>
+            
+            <div id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password">
+                </div>
+                <div id="login-error" style="color: var(--error-color); margin-bottom: 15px; font-size: 0.9rem;"></div>
+                <button id="login-btn" class="btn btn-block">Sign In</button>
+                <div class="auth-switch">
+                    Don't have an account? <a href="#" id="show-register">Create Account</a>
+                </div>
+                <div class="auth-switch">
+                    <a href="#" id="show-forgot-password" class="btn-link">Forgot Password?</a>
+                </div>
+            </div>
+            
+            <div id="register-form" style="display: none;">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="register-phone">Phone Number</label>
+                    <input type="text" id="register-phone" placeholder="Enter your phone number">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" placeholder="Confirm your password">
+                </div>
+                <div id="register-error" style="color: var(--error-color); margin-bottom: 15px; font-size: 0.9rem;"></div>
+                <button id="register-btn" class="btn btn-block">Create Account</button>
+                <div class="auth-switch">
+                    Already have an account? <a href="#" id="show-login">Sign In</a>
+                </div>
+            </div>
+            
+            <div id="forgot-password-form" style="display: none;">
+                <div class="form-group">
+                    <label for="forgot-email">Email</label>
+                    <input type="email" id="forgot-email" placeholder="Enter your registered email">
+                </div>
+                <div id="forgot-error" style="color: var(--error-color); margin-bottom: 10px; font-size: 0.9rem;"></div>
+                <div id="forgot-success" style="color: var(--success-color); margin-bottom: 15px; font-size: 0.9rem;"></div>
+                <button id="forgot-btn" class="btn btn-block">Reset Password</button>
+                <div class="auth-switch">
+                    <a href="#" id="back-to-login" class="btn-link">Back to Sign In</a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="features-container" style="display: none;">
+            <div class="header">
+                <div style="display: flex; align-items: center; margin-top: 10px;">
+                    <button id="logout-btn" class="btn">Logout</button>
+                </div>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card" id="open-chat">
+                    <div class="feature-icon">💬</div>
+                    <h3>Support Chat</h3>
+                    <p>Get guidance and personalized recommendations from our support team.</p>
+                </div>
+                
+                <div class="feature-card" id="schedule-call">
+                    <div class="feature-icon">📞</div>
+                    <h3>Video Call</h3>
+                    <p>Schedule calls with licensed professionals for personalized care.</p>
+                </div>
+                
+                <div class="feature-card" id="music-therapy">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Music Library</h3>
+                    <p>Access therapeutic music for relaxation, sleep, and meditation.</p>
+                </div>
+                
+                <div class="feature-card" id="video-therapy">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Video Resources</h3>
+                    <p>Watch guided videos for various health concerns and practices.</p>
+                </div>
+                
+                <div class="feature-card" id="resources">
+                    <div class="feature-icon">📚</div>
+                    <h3>Resources</h3>
+                    <p>Access guides, articles and self-help resources to support your wellness journey.</p>
+                </div>
+                
+                <div class="feature-card" id="progress">
+                    <div class="feature-icon">📊</div>
+                    <h3>Progress Tracking</h3>
+                    <p>Track your wellness journey with mood tracking and personalized insights.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="chat-interface" style="display: none;">
+            <div class="chat-header">
+                <button class="btn btn-small" id="close-chat">Back</button>
+                <h2>Chat</h2>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    <div class="message-content">
+                        <p>Hello! How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-message" placeholder="Type your message here...">
+                <button id="send-message" class="btn">Send</button>
+            </div>
+        </div>
+        
+        <div id="music-therapy-interface" style="display: none;">
+            <div class="therapy-header">
+                <button class="btn btn-small" id="close-music-therapy">Back</button>
+                <h2>Music</h2>
+            </div>
+            <div class="therapy-content">
+                <div class="therapy-categories">
+                    <h3>Choose a category:</h3>
+                    <div class="category-buttons">
+                        <button class="therapy-category active" data-category="anxiety">Relaxation</button>
+                        <button class="therapy-category" data-category="depression">Mood Boosters</button>
+                        <button class="therapy-category" data-category="stress">Calm</button>
+                        <button class="therapy-category" data-category="sleep">Sleep Sounds</button>
+                        <button class="therapy-category" data-category="meditation">Meditation</button>
+                        <button class="therapy-category" data-category="ragas">Classical</button>
+                    </div>
+                </div>
+                
+                <div class="music-player">
+                    <div class="current-track">
+                        <h4 id="current-track-name">Select a track to play</h4>
+                        <p id="current-track-description"></p>
+                    </div>
+                    <audio id="audio-player" controls></audio>
+                </div>
+                
+                <div class="track-list anxiety-tracks">
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                        <div class="track-info">
+                            <h4>Calming Anxiety Relief</h4>
+                            <p>Gentle sounds to ease anxiety and stress</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+                        <div class="track-info">
+                            <h4>Peaceful Mind</h4>
+                            <p>Relaxing tones for clearing thoughts</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
+                        <div class="track-info">
+                            <h4>Anxiety Relief Breathing</h4>
+                            <p>Music synchronized to optimal breathing patterns for anxiety relief</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3">
+                        <div class="track-info">
+                            <h4>Nature's Calm</h4>
+                            <p>Bird songs and forest sounds for grounding and anxiety reduction</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                </div>
+                
+                <div class="track-list sleep-tracks" style="display: none;">
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3">
+                        <div class="track-info">
+                            <h4>Deep Sleep</h4>
+                            <p>Soothing sounds for restful sleep</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3">
+                        <div class="track-info">
+                            <h4>Night Rain</h4>
+                            <p>Gentle rain sounds for sleeping</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3">
+                        <div class="track-info">
+                            <h4>Delta Wave Sleep</h4>
+                            <p>Delta frequency waves to promote deep sleep cycles</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3">
+                        <div class="track-info">
+                            <h4>Ocean Waves</h4>
+                            <p>Rhythmic ocean waves to lull you into deep sleep</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                </div>
+                
+                <div class="track-list meditation-tracks" style="display: none;">
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3">
+                        <div class="track-info">
+                            <h4>Mindful Meditation</h4>
+                            <p>Guided meditation for presence</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3">
+                        <div class="track-info">
+                            <h4>Inner Peace</h4>
+                            <p>Meditation music for finding calm</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3">
+                        <div class="track-info">
+                            <h4>Chakra Balancing</h4>
+                            <p>Tones calibrated to balance chakra energies</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3">
+                        <div class="track-info">
+                            <h4>Guided Body Scan</h4>
+                            <p>Progressive relaxation through guided body awareness</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                </div>
+                
+                <div class="track-list ragas-tracks" style="display: none;">
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3">
+                        <div class="track-info">
+                            <h4>Raga Bhairav</h4>
+                            <p>Morning raga for tranquility</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3">
+                        <div class="track-info">
+                            <h4>Raga Yaman</h4>
+                            <p>Evening raga for relaxation</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3">
+                        <div class="track-info">
+                            <h4>Raga Malkauns</h4>
+                            <p>Midnight raga for deep meditation and spiritual awakening</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3">
+                        <div class="track-info">
+                            <h4>Raga Darbari</h4>
+                            <p>Late night raga for relieving tension and anxiety</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                </div>
+
+                
+                <div class="track-list depression-tracks" style="display: none;">
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3">
+                        <div class="track-info">
+                            <h4>Uplifting Harmony</h4>
+                            <p>Gentle progression from minor to major keys to improve mood</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3">
+                        <div class="track-info">
+                            <h4>Positive Energy</h4>
+                            <p>Rhythmic beats and uplifting melodies to combat depression</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-19.mp3">
+                        <div class="track-info">
+                            <h4>Morning Light</h4>
+                            <p>Sunrise-inspired composition to encourage hope and new beginnings</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-20.mp3">
+                        <div class="track-info">
+                            <h4>Emotional Release</h4>
+                            <p>Cathartic musical journey to process and release emotions</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                </div>
+
+                <div class="track-list stress-tracks" style="display: none;">
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-21.mp3">
+                        <div class="track-info">
+                            <h4>Stress Melt</h4>
+                            <p>Progressive relaxation tones to reduce cortisol levels</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-22.mp3">
+                        <div class="track-info">
+                            <h4>Tension Release</h4>
+                            <p>Rhythmic patterns to help release physical tension</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-23.mp3">
+                        <div class="track-info">
+                            <h4>Work Break</h4>
+                            <p>5-minute stress relief designed for quick mental reset during work</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                    <div class="track" data-src="https://soundhelix.com/examples/mp3/SoundHelix-Song-24.mp3">
+                        <div class="track-info">
+                            <h4>Calm Focus</h4>
+                            <p>Alpha wave music to reduce stress while maintaining focus</p>
+                        </div>
+                        <button class="play-track">Play</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div id="video-therapy-interface" style="display: none;">
+            <div class="therapy-header">
+                <button class="btn btn-small" id="close-video-therapy">Back</button>
+                <h2>Videos</h2>
+            </div>
+            <div class="therapy-content">
+                <div class="therapy-categories">
+                    <h3>Choose a category:</h3>
+                    <div class="category-buttons">
+                        <button class="therapy-category active" data-category="anxiety-videos">Relaxation</button>
+                        <button class="therapy-category" data-category="depression-videos">Motivation</button>
+                        <button class="therapy-category" data-category="stress-videos">Calm</button>
+                        <button class="therapy-category" data-category="yoga-videos">Yoga & Breathing</button>
+                        <button class="therapy-category" data-category="meditation-videos">Guided Meditation</button>
+                        <button class="therapy-category" data-category="ayurveda-videos">Wellness Practices</button>
+                    </div>
+                </div>
+                
+                <div class="video-container">
+                    <div id="video-player">
+                        <div class="placeholder-video">
+                            <p>Select a video to play</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-list anxiety-videos">
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Overcoming Anxiety</h4>
+                            <p>Techniques to manage anxiety and stress</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Anxiety Relief Exercises</h4>
+                            <p>Simple exercises for immediate anxiety relief</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Understanding Panic Attacks</h4>
+                            <p>Learn what happens during a panic attack and how to manage them</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Cognitive Behavioral Therapy for Anxiety</h4>
+                            <p>CBT techniques to challenge anxious thoughts</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                </div>
+                
+                <div class="video-list depression-videos" style="display: none;">
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Understanding Depression</h4>
+                            <p>Expert explanation of depression and treatment options</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Depression Management Techniques</h4>
+                            <p>Daily practices to manage depression symptoms</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Building a Daily Routine for Depression</h4>
+                            <p>How to structure your day to support mood improvement</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Finding Meaning and Purpose</h4>
+                            <p>Exploring activities that bring joy and fulfillment</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                </div>
+                
+                <div class="video-list stress-videos" style="display: none;">
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Understanding Your Stress Response</h4>
+                            <p>How stress affects your body and mind</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Quick Stress Busters</h4>
+                            <p>5-minute techniques for immediate stress relief</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Mindfulness for Busy People</h4>
+                            <p>Integrating mindfulness into your daily routine</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Sleep Hygiene for Stress</h4>
+                            <p>Improving your sleep to better manage stress</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                </div>
+                
+                <div class="video-list yoga-videos" style="display: none;">
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Stress Relief Yoga</h4>
+                            <p>15-minute yoga session for stress relief</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Breathing Exercises for Anxiety</h4>
+                            <p>Guided breathing techniques for anxiety relief</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Gentle Morning Yoga Flow</h4>
+                            <p>Start your day with this energizing but gentle yoga routine</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Yoga Nidra for Deep Relaxation</h4>
+                            <p>Guided "yogic sleep" practice for profound relaxation</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                </div>
+                
+                <div class="video-list meditation-videos" style="display: none;">
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Beginner's Meditation Guide</h4>
+                            <p>Simple meditation techniques for beginners</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Body Scan Meditation</h4>
+                            <p>Guided meditation focusing on physical sensations</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Loving-Kindness Meditation</h4>
+                            <p>Cultivate compassion for yourself and others</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Walking Meditation Practice</h4>
+                            <p>Learn to meditate while walking in nature</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                </div>
+                
+                <div class="video-list ayurveda-videos" style="display: none;">
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Ayurvedic Daily Routine</h4>
+                            <p>Introduction to Dinacharya for mental wellness</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Ayurvedic Herbs for Mental Health</h4>
+                            <p>Traditional herbs to support mental wellbeing</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Understanding Your Dosha</h4>
+                            <p>Learn your Ayurvedic body type and how it affects your mental health</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                    <div class="video" data-embed="dQw4w9WgXcQ">
+                        <div class="video-info">
+                            <h4>Abhyanga Self-Massage</h4>
+                            <p>Ayurvedic oil massage techniques to calm the nervous system</p>
+                        </div>
+                        <button class="play-video">Watch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    
+        <div id="video-consultation-interface" style="display: none;">
+            <div class="therapy-header">
+                <button class="btn btn-small" id="close-consultation">Back</button>
+                <h2>Schedule Video Consultation</h2>
+            </div>
+            <div class="therapy-content">
+                <div class="consultation-intro">
+                    <p>Connect with licensed therapists and mental health professionals through secure video calls. Choose a specialist that matches your needs and schedule a convenient time.</p>
+                </div>
+                
+                <div class="consultation-steps">
+                    <div class="step active" id="step-1">
+                        <h3>Step 1: Choose a Specialist</h3>
+                        <div class="therapist-list">
+                            <div class="therapist-card" data-id="1">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Sarah Johnson" class="therapist-img">
+                                <div class="therapist-info">
+                                    <h4>Dr. Sarah Johnson</h4>
+                                    <p class="therapist-title">Clinical Psychologist</p>
+                                    <p class="therapist-exp">Experience: 8+ years</p>
+                                    <p class="therapist-spec">Specializes in: Anxiety, Depression, Stress Management</p>
+                                    <p class="therapist-lang">Languages: English, Hindi</p>
+                                    <div class="therapist-rating">
+                                        <span>★★★★★</span> <span class="rating-count">(127 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="btn select-therapist">Schedule</button>
+                                <button class="btn video-call-btn" style="margin-top: 10px; background-color: var(--secondary-color);">Video Call</button>
+                            </div>
+                            
+                            <div class="therapist-card" data-id="2">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Rajesh Sharma" class="therapist-img">
+                                <div class="therapist-info">
+                                    <h4>Dr. Rajesh Sharma</h4>
+                                    <p class="therapist-title">Psychiatrist</p>
+                                    <p class="therapist-exp">Experience: 12+ years</p>
+                                    <p class="therapist-spec">Specializes in: Depression, Bipolar Disorder, Medication Management</p>
+                                    <p class="therapist-lang">Languages: English, Hindi, Punjabi</p>
+                                    <div class="therapist-rating">
+                                        <span>★★★★☆</span> <span class="rating-count">(98 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="btn select-therapist">Schedule</button>
+                                <button class="btn video-call-btn" style="margin-top: 10px; background-color: var(--secondary-color);">Video Call</button>
+                            </div>
+                            
+                            <div class="therapist-card" data-id="3">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dr. Priya Patel" class="therapist-img">
+                                <div class="therapist-info">
+                                    <h4>Dr. Priya Patel</h4>
+                                    <p class="therapist-title">Counseling Psychologist</p>
+                                    <p class="therapist-exp">Experience: 6+ years</p>
+                                    <p class="therapist-spec">Specializes in: Relationships, Work Stress, Life Transitions</p>
+                                    <p class="therapist-lang">Languages: English, Gujarati, Hindi</p>
+                                    <div class="therapist-rating">
+                                        <span>★★★★★</span> <span class="rating-count">(152 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="btn select-therapist">Schedule</button>
+                                <button class="btn video-call-btn" style="margin-top: 10px; background-color: var(--secondary-color);">Video Call</button>
+                            </div>
+                            
+                            <div class="therapist-card" data-id="4">
+                                <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Dr. Vikram Singh" class="therapist-img">
+                                <div class="therapist-info">
+                                    <h4>Dr. Vikram Singh</h4>
+                                    <p class="therapist-title">Psychotherapist</p>
+                                    <p class="therapist-exp">Experience: 10+ years</p>
+                                    <p class="therapist-spec">Specializes in: Trauma, PTSD, Anxiety Disorders</p>
+                                    <p class="therapist-lang">Languages: English, Hindi, Urdu</p>
+                                    <div class="therapist-rating">
+                                        <span>★★★★☆</span> <span class="rating-count">(89 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="btn select-therapist">Schedule</button>
+                                <button class="btn video-call-btn" style="margin-top: 10px; background-color: var(--secondary-color);">Video Call</button>
+                            </div>
+                            
+                
+                            <div class="therapist-card" data-id="5">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Dr. Suray Sharma" class="therapist-img">
+                                <div class="therapist-info">
+                                    <h4>Dr. Suray Sharma</h4>
+                                    <p class="therapist-title">Psychiatrist & Mental Health Specialist</p>
+                                    <p class="therapist-exp">Experience: 15+ years</p>
+                                    <p class="therapist-spec">Specializes in: Clinical Depression, Anxiety Disorders, Addiction Recovery</p>
+                                    <p class="therapist-lang">Languages: Hindi, English, Sanskrit</p>
+                                    <div class="therapist-rating">
+                                        <span>★★★★★</span> <span class="rating-count">(178 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="btn select-therapist">Schedule</button>
+                                <button class="btn video-call-btn" style="margin-top: 10px; background-color: var(--secondary-color);">Video Call</button>
+                            </div>
+                            
+                            <div class="therapist-card" data-id="6">
+                                <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Dr. Yogesh Kumar" class="therapist-img">
+                                <div class="therapist-info">
+                                    <h4>Dr. Yogesh Kumar</h4>
+                                    <p class="therapist-title">Clinical Psychologist & Meditation Expert</p>
+                                    <p class="therapist-exp">Experience: 9+ years</p>
+                                    <p class="therapist-spec">Specializes in: Mindfulness, Stress Management, Corporate Wellness</p>
+                                    <p class="therapist-lang">Languages: Hindi, English, Tamil</p>
+                                    <div class="therapist-rating">
+                                        <span>★★★★★</span> <span class="rating-count">(143 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="btn select-therapist">Schedule</button>
+                                <button class="btn video-call-btn" style="margin-top: 10px; background-color: var(--secondary-color);">Video Call</button>
+                            </div>
+                            
+                            <div class="therapist-card" data-id="7">
+                                <img src="https://randomuser.me/api/portraits/men/71.jpg" alt="Dr. Harshit Jain" class="therapist-img">
+                                <div class="therapist-info">
+                                    <h4>Dr. Harshit Jain</h4>
+                                    <p class="therapist-title">Neuropsychologist & Behavioral Therapist</p>
+                                    <p class="therapist-exp">Experience: 7+ years</p>
+                                    <p class="therapist-spec">Specializes in: Cognitive Behavioral Therapy, Family Counseling, Youth Psychology</p>
+                                    <p class="therapist-lang">Languages: Hindi, English, Marathi</p>
+                                    <div class="therapist-rating">
+                                        <span>★★★★☆</span> <span class="rating-count">(121 reviews)</span>
+                                    </div>
+                                </div>
+                                <button class="btn select-therapist">Schedule</button>
+                                <button class="btn video-call-btn" style="margin-top: 10px; background-color: var(--secondary-color);">Video Call</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step-2" style="display: none;">
+                        <h3>Step 2: Select Date & Time</h3>
+                        <div class="selected-therapist-summary">
+                            <img id="selected-therapist-img" src="" alt="Selected therapist" class="therapist-img-small">
+                            <div>
+                                <h4 id="selected-therapist-name"></h4>
+                                <p id="selected-therapist-title"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="prev-month" class="btn-small">❮</button>
+                                <h4 id="current-month"></h4>
+                                <button id="next-month" class="btn-small">❯</button>
+                            </div>
+                            <div class="weekdays">
+                                <div>Sun</div>
+                                <div>Mon</div>
+                                <div>Tue</div>
+                                <div>Wed</div>
+                                <div>Thu</div>
+                                <div>Fri</div>
+                                <div>Sat</div>
+                            </div>
+                            <div id="calendar-days" class="days"></div>
+                        </div>
+                        
+                        <div class="time-slots-container">
+                            <h4>Available time slots for <span id="selected-date-display"></span></h4>
+                            <div class="time-slots" id="time-slots">
+                                <button class="time-slot">9:00 AM</button>
+                                <button class="time-slot">10:00 AM</button>
+                                <button class="time-slot">11:00 AM</button>
+                                <button class="time-slot">1:00 PM</button>
+                                <button class="time-slot">2:00 PM</button>
+                                <button class="time-slot">3:00 PM</button>
+                                <button class="time-slot">4:00 PM</button>
+                                <button class="time-slot">5:00 PM</button>
+                            </div>
+                        </div>
+                        
+                        <div class="navigation-buttons">
+                            <button id="back-to-step-1" class="btn">Back</button>
+                            <button id="proceed-to-step-3" class="btn" disabled>Continue</button>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step-3" style="display: none;">
+                        <h3>Step 3: Confirm Details</h3>
+                        
+                        <div class="consultation-summary">
+                            <h4>Appointment Summary</h4>
+                            <div class="summary-item">
+                                <span class="summary-label">Therapist:</span>
+                                <span id="summary-therapist"></span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Date:</span>
+                                <span id="summary-date"></span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Time:</span>
+                                <span id="summary-time"></span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Session Duration:</span>
+                                <span>60 minutes</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Consultation Fee:</span>
+                                <span>₹1,500</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="consultation-notes">Notes for the therapist (optional)</label>
+                            <textarea id="consultation-notes" rows="4" placeholder="Share any specific concerns or topics you'd like to discuss"></textarea>
+                        </div>
+                        
+                        <div class="navigation-buttons">
+                            <button id="back-to-step-2" class="btn">Back</button>
+                            <button id="confirm-appointment" class="btn">Confirm Appointment</button>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step-4" style="display: none;">
+                        <div class="confirmation-message">
+                            <div class="confirmation-icon">✓</div>
+                            <h3>Appointment Confirmed!</h3>
+                            <p>Your video consultation has been scheduled successfully.</p>
+                            <div class="consultation-summary">
+                                <div class="summary-item">
+                                    <span class="summary-label">Therapist:</span>
+                                    <span id="confirmation-therapist"></span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Date & Time:</span>
+                                    <span id="confirmation-datetime"></span>
+                                </div>
+                            </div>
+                            <p>You will receive a confirmation email with the appointment details and a link to join the video call.</p>
+                            <button id="back-to-features" class="btn">Return to Dashboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="live-video-call-interface" style="display: none;">
+        <div class="video-call-header">
+            <button class="btn btn-small" id="end-call-btn">End Call</button>
+            <h2>Live Video Consultation with <span id="doctor-name-display">Doctor</span></h2>
+            <button class="btn btn-small" id="settings-btn">Settings</button>
+        </div>
+        <div class="video-call-container">
+            <div class="video-grid">
+                <div class="video-participant">
+                    <div id="doctor-video" class="video-stream">
+                        <img id="doctor-placeholder" src="" alt="Doctor" class="video-placeholder">
+                    </div>
+                    <div class="participant-name">
+                        <span id="doctor-name">Dr. </span>
+                    </div>
+                </div>
+                <div class="video-participant">
+                    <div id="local-video" class="video-stream">
+                        <video id="user-video" autoplay muted></video>
+                        <img id="user-placeholder" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="User" class="video-placeholder" style="display: none;">
+                    </div>
+                    <div class="participant-name">
+                        <span>You</span>
+                    </div>
+                </div>
+            </div>
+            <div class="video-controls">
+                <button id="toggle-mic" class="control-btn">
+                    <span class="control-icon">🎤</span>
+                </button>
+                <button id="toggle-video" class="control-btn">
+                    <span class="control-icon">📹</span>
+                </button>
+                <button id="toggle-chat" class="control-btn">
+                    <span class="control-icon">💬</span>
+                </button>
+                <button id="end-call" class="control-btn end-call">
+                    <span class="control-icon">📞</span>
+                </button>
+            </div>
+            <div id="call-chat" class="call-chat-panel" style="display: none;">
+                <h3>Chat</h3>
+                <div id="call-chat-messages" class="call-chat-messages"></div>
+                <div class="call-chat-input">
+                    <input type="text" id="call-chat-message" placeholder="Type a message...">
+                    <button id="send-call-chat">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="profile-settings-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Profile Settings</h3>
+            
+            <div class="profile-photo-section">
+                <h4>Change Profile Photo</h4>
+                <div class="profile-photo-container">
+                    <img id="current-profile-photo" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="Current profile photo">
+                    <div class="photo-options">
+                        <label for="profile-photo-upload" class="btn">Upload Photo</label>
+                        <input type="file" id="profile-photo-upload" accept="image/*" style="display: none;">
+                        <button id="take-photo-btn" class="btn">Take Photo</button>
+                    </div>
+                </div>
+                <div id="camera-container" style="display: none;">
+                    <video id="camera-preview" autoplay></video>
+                    <button id="capture-photo" class="btn">Capture</button>
+                    <button id="cancel-camera" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="doctor-photo-section" style="display: none;">
+                <h4>Select Doctor Photo (Demo Only)</h4>
+                <div class="doctor-photos-grid">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Dr. Suray Sharma" class="doctor-photo-option">
+                    <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Dr. Yogesh Kumar" class="doctor-photo-option">
+                    <img src="https://randomuser.me/api/portraits/men/71.jpg" alt="Dr. Harshit Jain" class="doctor-photo-option">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Rajesh Sharma" class="doctor-photo-option">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Dr. Sarah Johnson" class="doctor-photo-option">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dr. Priya Patel" class="doctor-photo-option">
+                    <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Dr. Vikram Singh" class="doctor-photo-option">
+                </div>
+            </div>
+            
+            <div class="settings-buttons">
+                <button id="save-settings" class="btn">Save Settings</button>
+                <button id="cancel-settings" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    
+    let currentUser = null;
+    
+    
+    const authContainer = document.getElementById('auth-container');
+    const featuresContainer = document.getElementById('features-container');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const forgotPasswordForm = document.getElementById('forgot-password-form');
+    const usernameDisplay = document.getElementById('username-display');
+    
+    
+    document.getElementById('show-register').addEventListener('click', function(e) {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        forgotPasswordForm.style.display = 'none';
+    });
+    
+    document.getElementById('show-login').addEventListener('click', function(e) {
+        e.preventDefault();
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'none';
+    });
+    
+    document.getElementById('show-forgot-password').addEventListener('click', function(e) {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'block';
+    });
+    
+    document.getElementById('back-to-login').addEventListener('click', function(e) {
+        e.preventDefault();
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'none';
+    });
+    
+
+    document.getElementById('login-btn').addEventListener('click', function() {
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+        const errorElement = document.getElementById('login-error');
+        
+        if (!email || !password) {
+            errorElement.textContent = 'Please fill in all fields';
+            return;
+        }
+        
+        const users = JSON.parse(localStorage.getItem('mindcare_users') || '[]');
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (user) {
+            
+            currentUser = {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            };
+            localStorage.setItem('mindcare_current_user', JSON.stringify(currentUser));
+            
+            
+            showFeaturesInterface();
+        } else {
+            errorElement.textContent = 'Invalid email or password';
+        }
+    });
+    
+    
+    document.getElementById('register-btn').addEventListener('click', function() {
+        const name = document.getElementById('register-name').value.trim();
+        const email = document.getElementById('register-email').value.trim();
+        const phone = document.getElementById('register-phone').value.trim();
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('register-confirm-password').value;
+        const errorElement = document.getElementById('register-error');
+        
+        if (!name || !email || !phone || !password || !confirmPassword) {
+            errorElement.textContent = 'Please fill in all fields';
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            errorElement.textContent = 'Passwords do not match';
+            return;
+        }
+        
+        
+        const users = JSON.parse(localStorage.getItem('mindcare_users') || '[]');
+        
+        if (users.some(u => u.email === email)) {
+            errorElement.textContent = 'Email is already registered';
+            return;
+        }
+        
+        const newUser = {
+            id: Date.now().toString(),
+            name,
+            email,
+            phone,
+            password
+        };
+        
+        users.push(newUser);
+        localStorage.setItem('mindcare_users', JSON.stringify(users));
+        
+    
+        currentUser = {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email
+        };
+        
+        localStorage.setItem('mindcare_current_user', JSON.stringify(currentUser));
+        
+        
+        showFeaturesInterface();
+    });
+    
+    
+    document.getElementById('forgot-btn').addEventListener('click', function() {
+        const email = document.getElementById('forgot-email').value.trim();
+        const errorElement = document.getElementById('forgot-error');
+        const successElement = document.getElementById('forgot-success');
+        
+        if (!email) {
+            errorElement.textContent = 'Please enter your email';
+            successElement.textContent = '';
+            return;
+        }
+        
+        
+        const users = JSON.parse(localStorage.getItem('mindcare_users') || '[]');
+        const user = users.find(u => u.email === email);
+        
+        if (user) {
+            errorElement.textContent = '';
+            successElement.textContent = 'Password reset instructions sent to your email';
+            
+            
+            
+        
+            setTimeout(() => {
+                loginForm.style.display = 'block';
+                forgotPasswordForm.style.display = 'none';
+                successElement.textContent = '';
+            }, 3000);
+        } else {
+            errorElement.textContent = 'Email not found';
+            successElement.textContent = '';
+        }
+    });
+    
+    // Logout functionality
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        localStorage.removeItem('mindcare_current_user');
+        showAuthInterface();
+    });
+    
+    // Show authentication interface
+    function showAuthInterface() {
+        authContainer.style.display = 'block';
+        featuresContainer.style.display = 'none';
+        
+        // Reset forms
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'none';
+        
+        // Clear inputs
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-password').value = '';
+        document.getElementById('login-error').textContent = '';
+    }
+    
+    // Show features interface
+    function showFeaturesInterface() {
+        authContainer.style.display = 'none';
+        featuresContainer.style.display = 'block';
+        
+        // Update username display
+        if (currentUser && usernameDisplay) {
+            usernameDisplay.textContent = currentUser.name;
+        }
+    }
+    
+    // Open Chat
+    function openChatInterface() {
+        document.getElementById('features-container').style.display = 'none';
+        document.getElementById('chat-interface').style.display = 'flex';
+    }
+    
+    // Open Music Therapy
+    function openMusicTherapy() {
+        document.getElementById('features-container').style.display = 'none';
+        document.getElementById('music-therapy-interface').style.display = 'block';
+    }
+    
+    // Open Video Therapy
+    function openVideoTherapy() {
+        document.getElementById('features-container').style.display = 'none';
+        document.getElementById('video-therapy-interface').style.display = 'block';
+    }
+    
+    // Initialize feature cards
+    function initFeatureCards() {
+        const openChatCard = document.getElementById('open-chat');
+        const scheduleCallCard = document.getElementById('schedule-call');
+        const musicTherapyCard = document.getElementById('music-therapy');
+        const videoTherapyCard = document.getElementById('video-therapy');
+        const resourcesCard = document.getElementById('resources');
+        const progressCard = document.getElementById('progress');
+        
+        if (openChatCard) {
+            openChatCard.addEventListener('click', function() {
+                openChatInterface();
+            });
+        }
+        
+        if (scheduleCallCard) {
+            scheduleCallCard.addEventListener('click', function() {
+                document.getElementById('features-container').style.display = 'none';
+                document.getElementById('video-consultation-interface').style.display = 'block';
+            });
+        }
+        
+        if (musicTherapyCard) {
+            musicTherapyCard.addEventListener('click', function() {
+                openMusicTherapy();
+            });
+        }
+        
+        if (videoTherapyCard) {
+            videoTherapyCard.addEventListener('click', function() {
+                openVideoTherapy();
+            });
+        }
+        
+        if (resourcesCard) {
+            resourcesCard.addEventListener('click', function() {
+                alert('Resources will be available in a future update!');
+            });
+        }
+        
+        if (progressCard) {
+            progressCard.addEventListener('click', function() {
+                alert('Progress tracking will be available in a future update!');
+            });
+        }
+    }
+    
+    // Chat functionality
+    function initChatInterface() {
+        const closeChat = document.getElementById('close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const userMessageInput = document.getElementById('user-message');
+        const sendMessageBtn = document.getElementById('send-message');
+        
+        // Close chat and return to features
+        if (closeChat) {
+            closeChat.addEventListener('click', function() {
+                document.getElementById('chat-interface').style.display = 'none';
+                document.getElementById('features-container').style.display = 'block';
+            });
+        }
+        
+        // Send message function
+        function sendMessage() {
+            const message = userMessageInput.value.trim();
+            if (message === '') return;
+            
+            // Add user message to chat
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = 'message user';
+            userMsgDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${message}</p>
+                </div>
+            `;
+            chatMessages.appendChild(userMsgDiv);
+            
+            // Clear input
+            userMessageInput.value = '';
+            
+            // Auto scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Get response using response function
+            setTimeout(() => {
+                const response = getResponse(message);
+                
+                // Add bot message to chat
+                const botMsgDiv = document.createElement('div');
+                botMsgDiv.className = 'message bot';
+                botMsgDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>${response}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(botMsgDiv);
+                
+                // Auto scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+        
+        // Event listeners
+        if (sendMessageBtn) {
+            sendMessageBtn.addEventListener('click', sendMessage);
+        }
+        
+        if (userMessageInput) {
+            userMessageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+        
+        console.log('Chat interface initialized');
+    }
+    
+    // Music Therapy Functionality
+    function initMusicTherapy() {
+        const closeMusic = document.getElementById('close-music-therapy');
+        const audioPlayer = document.getElementById('audio-player');
+        const currentTrackName = document.getElementById('current-track-name');
+        const currentTrackDescription = document.getElementById('current-track-description');
+        const categoryButtons = document.querySelectorAll('.therapy-category[data-category]');
+        const trackLists = document.querySelectorAll('.track-list');
+        const playButtons = document.querySelectorAll('.play-track');
+        
+        // Close music therapy and return to features
+        if (closeMusic) {
+            closeMusic.addEventListener('click', function() {
+                audioPlayer.pause();
+                document.getElementById('music-therapy-interface').style.display = 'none';
+                document.getElementById('features-container').style.display = 'block';
+            });
+        }
+        
+        // Category switching
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.dataset.category;
+                
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding track list
+                trackLists.forEach(list => {
+                    if (list.classList.contains(category + '-tracks')) {
+                        list.style.display = 'grid';
+                    } else {
+                        list.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Play track buttons
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const track = this.closest('.track');
+                const src = track.dataset.src;
+                const trackName = track.querySelector('h4').textContent;
+                const trackDescription = track.querySelector('p').textContent;
+                
+                audioPlayer.src = src;
+                audioPlayer.play();
+                
+                currentTrackName.textContent = trackName;
+                currentTrackDescription.textContent = trackDescription;
+            });
+        });
+    }
+    
+    // Video Therapy Functionality
+    function initVideoTherapy() {
+        const closeVideo = document.getElementById('close-video-therapy');
+        const videoPlayer = document.getElementById('video-player');
+        const categoryButtons = document.querySelectorAll('.therapy-category[data-category]');
+        const videoLists = document.querySelectorAll('.video-list');
+        const playButtons = document.querySelectorAll('.play-video');
+        
+        // Close video therapy and return to features
+        if (closeVideo) {
+            closeVideo.addEventListener('click', function() {
+                videoPlayer.innerHTML = '<div class="placeholder-video"><p>Select a video to play</p></div>';
+                document.getElementById('video-therapy-interface').style.display = 'none';
+                document.getElementById('features-container').style.display = 'block';
+            });
+        }
+        
+        // Category switching
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.dataset.category;
+                
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding video list
+                videoLists.forEach(list => {
+                    if (list.classList.contains(category)) {
+                        list.style.display = 'grid';
+                    } else {
+                        list.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Play video buttons
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const video = this.closest('.video');
+                const videoId = video.dataset.embed;
+                
+                // Create YouTube embed
+                videoPlayer.innerHTML = `
+                    <iframe width="100%" height="400" 
+                    src="https://www.youtube.com/embed/${videoId}" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                    encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
+            });
+        });
+    }
+    
+    // Check if user is already logged in
+    function checkLoggedInUser() {
+        const savedUser = localStorage.getItem('mindcare_current_user');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            showFeaturesInterface();
+        } else {
+            showAuthInterface();
+        }
+    }
+    
+    // Initialize app
+    window.addEventListener('DOMContentLoaded', function() {
+        checkLoggedInUser();
+        initAuthFormToggles();
+        initFeatureCards();
+        initChatInterface();
+        initMusicTherapy();
+        initVideoTherapy();
+        initVideoConsultation();
+        
+        // Ensure global navigation handlers are initialized
+        initGlobalNavigationHandlers();
+    });
+
+    // Initialize global navigation handlers for consistent back functionality
+    function initGlobalNavigationHandlers() {
+        // Track current and previous interfaces for navigation
+        const interfaces = {
+            auth: document.getElementById('auth-container'),
+            features: document.getElementById('features-container'),
+            chat: document.getElementById('chat-interface'),
+            musicTherapy: document.getElementById('music-therapy-interface'),
+            videoTherapy: document.getElementById('video-therapy-interface'),
+            videoConsultation: document.getElementById('video-consultation-interface'),
+            videoCall: document.getElementById('live-video-call-interface')
+        };
+        
+        // Store the navigation history globally so it can be accessed from any function
+        window.navigationStack = [];
+        
+        // Properly initialize all back buttons across the application
+        initBackButtons();
+        
+        // Initialize escape key functionality
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                handleBackNavigation();
+            }
+        });
+        
+        // Initialize all back buttons in the application
+        function initBackButtons() {
+            const allBackButtons = [
+                document.getElementById('close-chat'),
+                document.getElementById('close-music-therapy'),
+                document.getElementById('close-video-therapy'),
+                document.getElementById('close-consultation'),
+                document.getElementById('back-to-features'),
+                document.getElementById('back-call-btn'),
+                document.getElementById('end-call-btn'),
+                document.getElementById('end-call')
+            ];
+            
+            allBackButtons.forEach(button => {
+                if (button) {
+                    // Remove any existing click event listeners to prevent duplicates
+                    const newButton = button.cloneNode(true);
+                    button.parentNode.replaceChild(newButton, button);
+                    
+                    // Add the new click event listener
+                    newButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleBackNavigation();
+                    });
+                }
+            });
+            
+            console.log('All back buttons initialized successfully');
+        }
+        
+        // Centralized function for handling back navigation
+        function handleBackNavigation() {
+            // Get current interface
+            const currentInterface = getCurrentInterface();
+            console.log('Current interface:', currentInterface);
+            
+            // Handle specific back functionality for each interface
+            switch(currentInterface) {
+                case 'videoCall':
+                    endVideoCall();
+                    break;
+                    
+                case 'chat':
+                    hideInterface(interfaces.chat);
+                    showInterface(interfaces.features);
+                    break;
+                    
+                case 'musicTherapy':
+                    // Stop audio if playing
+                    const audioPlayer = document.getElementById('audio-player');
+                    if (audioPlayer) audioPlayer.pause();
+                    
+                    hideInterface(interfaces.musicTherapy);
+                    showInterface(interfaces.features);
+                    break;
+                    
+                case 'videoTherapy':
+                    // Clear video player
+                    const videoPlayer = document.getElementById('video-player');
+                    if (videoPlayer) videoPlayer.innerHTML = '<div class="placeholder-video"><p>Select a video to play</p></div>';
+                    
+                    hideInterface(interfaces.videoTherapy);
+                    showInterface(interfaces.features);
+                    break;
+                    
+                case 'videoConsultation':
+                    hideInterface(interfaces.videoConsultation);
+                    showInterface(interfaces.features);
+                    break;
+                    
+                default:
+                    // If we don't have a specific handler, use the navigation stack
+                    if (window.navigationStack.length > 0) {
+                        const previousInterface = window.navigationStack.pop();
+                        navigateTo(previousInterface);
+                    } else {
+                        // Default to features interface if stack is empty
+                        hideAllInterfaces();
+                        showInterface(interfaces.features);
+                    }
+            }
+        }
+        
+        // Get current visible interface
+        function getCurrentInterface() {
+            // Check in explicit order of precedence (modals should be checked first)
+            if (interfaces.videoCall && getDisplayStyle(interfaces.videoCall) === 'flex') 
+                return 'videoCall';
+            if (interfaces.auth && getDisplayStyle(interfaces.auth) === 'block' || getDisplayStyle(interfaces.auth) === 'flex') 
+                return 'auth';
+            if (interfaces.chat && getDisplayStyle(interfaces.chat) === 'block' || getDisplayStyle(interfaces.chat) === 'flex') 
+                return 'chat';
+            if (interfaces.musicTherapy && getDisplayStyle(interfaces.musicTherapy) === 'block') 
+                return 'musicTherapy';
+            if (interfaces.videoTherapy && getDisplayStyle(interfaces.videoTherapy) === 'block') 
+                return 'videoTherapy';
+            if (interfaces.videoConsultation && getDisplayStyle(interfaces.videoConsultation) === 'block') 
+                return 'videoConsultation';
+            if (interfaces.features && getDisplayStyle(interfaces.features) === 'block') 
+                return 'features';
+            
+            // Default to features if nothing else is visible
+            return 'features';
+        }
+        
+        // Helper to get computed display style
+        function getDisplayStyle(element) {
+            if (!element) return 'none';
+            return window.getComputedStyle(element).display;
+        }
+        
+        // Navigate to specific interface
+        function navigateTo(interfaceName) {
+            console.log('Navigating to:', interfaceName);
+            hideAllInterfaces();
+            if (interfaces[interfaceName]) {
+                showInterface(interfaces[interfaceName]);
+            } else {
+                // Default to features
+                showInterface(interfaces.features);
+            }
+        }
+        
+        // Hide all interfaces
+        function hideAllInterfaces() {
+            Object.values(interfaces).forEach(interface => {
+                if (interface) hideInterface(interface);
+            });
+        }
+        
+        // Helper to show interface with appropriate display property
+        function showInterface(interface) {
+            if (!interface) return;
+            
+            if (interface.id === 'live-video-call-interface' || interface.id === 'chat-interface') {
+                interface.style.display = 'flex';
+            } else {
+                interface.style.display = 'block';
+            }
+        }
+        
+        // Helper to hide interface
+        function hideInterface(interface) {
+            if (interface) interface.style.display = 'none';
+        }
+        
+        // Video call functionality
+        window.endVideoCall = function() {
+            console.log('Ending video call...');
+            
+            try {
+                // Stop media streams
+                const localVideo = document.getElementById('user-video');
+                if (localVideo && localVideo.srcObject) {
+                    const tracks = localVideo.srcObject.getTracks();
+                    tracks.forEach(track => track.stop());
+                    localVideo.srcObject = null;
+                }
+                
+                // Stop any camera preview
+                const cameraPreview = document.getElementById('camera-preview');
+                if (cameraPreview && cameraPreview.srcObject) {
+                    const tracks = cameraPreview.srcObject.getTracks();
+                    tracks.forEach(track => track.stop());
+                    cameraPreview.srcObject = null;
+                }
+                
+                // Hide video call interface
+                const videoCallInterface = document.getElementById('live-video-call-interface');
+                if (videoCallInterface) videoCallInterface.style.display = 'none';
+                
+                // Hide settings modal if open
+                const settingsModal = document.getElementById('profile-settings-modal');
+                if (settingsModal) settingsModal.style.display = 'none';
+                
+                // Hide chat panel
+                const callChat = document.getElementById('call-chat');
+                if (callChat) callChat.style.display = 'none';
+                
+                // Check navigation stack for where to return
+                if (window.navigationStack && window.navigationStack.length > 0) {
+                    // Get the previous interface from stack
+                    const previousInterface = window.navigationStack.pop();
+                    if (previousInterface === 'videoConsultation') {
+                        const consultationInterface = document.getElementById('video-consultation-interface');
+                        if (consultationInterface) consultationInterface.style.display = 'block';
+                    } else {
+                        const featuresContainer = document.getElementById('features-container');
+                        if (featuresContainer) featuresContainer.style.display = 'block';
+                    }
+                } else {
+                    // Default to features if stack is empty
+                    const featuresContainer = document.getElementById('features-container');
+                    if (featuresContainer) featuresContainer.style.display = 'block';
+                }
+                
+                console.log('Video call ended successfully');
+            } catch (error) {
+                console.error('Error ending video call:', error);
+                // Fallback to just showing features interface
+                const featuresContainer = document.getElementById('features-container');
+                if (featuresContainer) featuresContainer.style.display = 'block';
+            }
+        };
+        
+        // Initialize feature card navigation
+        initFeatureCardNavigation();
+        
+        function initFeatureCardNavigation() {
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const currentInterface = getCurrentInterface();
+                    if (currentInterface !== 'features') {
+                        window.navigationStack.push(currentInterface);
+                    }
+                    
+                    // Add the current interface to navigation stack for back functionality
+                    const cardId = this.id;
+                    if (cardId === 'open-chat') {
+                        window.navigationStack.push('features');
+                        navigateTo('chat');
+                    } else if (cardId === 'music-therapy') {
+                        window.navigationStack.push('features');
+                        navigateTo('musicTherapy');
+                    } else if (cardId === 'video-therapy') {
+                        window.navigationStack.push('features');
+                        navigateTo('videoTherapy');
+                    } else if (cardId === 'schedule-call') {
+                        window.navigationStack.push('features');
+                        navigateTo('videoConsultation');
+                    }
+                });
+            });
+        }
+        
+        console.log('Global navigation system initialized');
+        return true; // Return success
+    }
+
+    // Special initialization for video consultation to fix navigation issues
+    function initVideoConsultation() {
+        const videoConsultationInterface = document.getElementById('video-consultation-interface');
+        const liveVideoCallInterface = document.getElementById('live-video-call-interface');
+        const featuresContainer = document.getElementById('features-container');
+        
+        // Direct video call buttons - ensure correct back navigation
+        const videoCallBtns = document.querySelectorAll('.video-call-btn');
+        videoCallBtns.forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const therapistCard = this.closest('.therapist-card');
+                const therapistImg = therapistCard.querySelector('.therapist-img').src;
+                const therapistName = therapistCard.querySelector('h4').textContent;
+                
+                // Store current interface in navigation stack
+                if (videoConsultationInterface && getComputedStyle(videoConsultationInterface).display !== 'none') {
+                    window.navigationStack.push('videoConsultation');
+                } else {
+                    window.navigationStack.push('features');
+                }
+                
+                // Start video call
+                startVideoCall(therapistName, therapistImg);
+            });
+        });
+        
+        // Function to start video call
+        function startVideoCall(doctorName, doctorImg) {
+            console.log('Starting video call with:', doctorName);
+            
+            // Update UI elements
+            const doctorNameDisplay = document.getElementById('doctor-name-display');
+            const doctorNameSpan = document.getElementById('doctor-name');
+            const doctorPlaceholder = document.getElementById('doctor-placeholder');
+            const userPlaceholder = document.getElementById('user-placeholder');
+            
+            if (doctorNameDisplay) doctorNameDisplay.textContent = doctorName;
+            if (doctorNameSpan) doctorNameSpan.textContent = doctorName;
+            if (doctorPlaceholder) doctorPlaceholder.src = doctorImg;
+            
+            // Get stored user photo if available
+            const userProfilePhoto = localStorage.getItem('mindcare_user_photo') || 'https://randomuser.me/api/portraits/lego/1.jpg';
+            if (userPlaceholder) userPlaceholder.src = userProfilePhoto;
+            
+            // Hide all other interfaces
+            if (videoConsultationInterface) videoConsultationInterface.style.display = 'none';
+            if (featuresContainer) featuresContainer.style.display = 'none';
+            
+            // Show video call interface
+            if (liveVideoCallInterface) liveVideoCallInterface.style.display = 'flex';
+            
+            // Initialize user video
+            const userVideo = document.getElementById('user-video');
+            if (userVideo) {
+                // Request camera access
+                navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+                    .then(stream => {
+                        userVideo.srcObject = stream;
+                        if (userVideo) userVideo.style.display = 'block';
+                        if (userPlaceholder) userPlaceholder.style.display = 'none';
+                        
+                        // Simulate doctor joining
+                        setTimeout(() => {
+                            if (doctorPlaceholder) {
+                                doctorPlaceholder.style.transition = 'opacity 1s ease';
+                                doctorPlaceholder.style.opacity = '0.3';
+                            }
+                            
+                            // Add initial message in chat
+                            showCallChatMessage(`Dr. ${doctorName} has joined the call`, 'doctor');
+                            
+                            // Simulate doctor greeting
+                            setTimeout(() => {
+                                showCallChatMessage(`Hello! Thank you for connecting. How can I help you today?`, 'doctor');
+                            }, 3000);
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Error accessing camera:', err);
+                        alert('Unable to access camera and microphone. Please check permissions in your browser settings.');
+                        
+                        // Show placeholder instead
+                        if (userVideo) userVideo.style.display = 'none';
+                        if (userPlaceholder) userPlaceholder.style.display = 'block';
+                        
+                        // Notify in chat
+                        showCallChatMessage('Camera access denied. You can still chat with the doctor.', 'system');
+                    });
+            }
+        }
+        
+        // Function to display chat messages in video call
+        function showCallChatMessage(message, sender) {
+            const chatMessages = document.getElementById('call-chat-messages');
+            if (!chatMessages) return;
+            
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message', sender);
+            messageElement.textContent = message;
+            
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Initialize video call control buttons
+        initVideoCallControls();
+        
+        function initVideoCallControls() {
+            // Toggle microphone
+            const toggleMic = document.getElementById('toggle-mic');
+            if (toggleMic) {
+                toggleMic.addEventListener('click', function() {
+                    const userVideo = document.getElementById('user-video');
+                    if (userVideo && userVideo.srcObject) {
+                        const audioTracks = userVideo.srcObject.getAudioTracks();
+                        if (audioTracks.length > 0) {
+                            const enabled = !audioTracks[0].enabled;
+                            audioTracks[0].enabled = enabled;
+                            this.classList.toggle('muted', !enabled);
+                            
+                            const iconElement = this.querySelector('.control-icon');
+                            if (iconElement) {
+                                iconElement.textContent = enabled ? '🎤' : '🔇';
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Toggle video
+            const toggleVideo = document.getElementById('toggle-video');
+            const userPlaceholder = document.getElementById('user-placeholder');
+            const userVideo = document.getElementById('user-video');
+            
+            if (toggleVideo) {
+                toggleVideo.addEventListener('click', function() {
+                    if (userVideo && userVideo.srcObject) {
+                        const videoTracks = userVideo.srcObject.getVideoTracks();
+                        if (videoTracks.length > 0) {
+                            const enabled = !videoTracks[0].enabled;
+                            videoTracks[0].enabled = enabled;
+                            this.classList.toggle('video-off', !enabled);
+                            
+                            const iconElement = this.querySelector('.control-icon');
+                            if (iconElement) {
+                                iconElement.textContent = enabled ? '📹' : '🚫';
+                            }
+                            
+                            // Show/hide placeholder based on video state
+                            if (userVideo) userVideo.style.display = enabled ? 'block' : 'none';
+                            if (userPlaceholder) userPlaceholder.style.display = enabled ? 'none' : 'block';
+                        }
+                    }
+                });
+            }
+            
+            // Toggle chat panel
+            const toggleChat = document.getElementById('toggle-chat');
+            if (toggleChat) {
+                toggleChat.addEventListener('click', function() {
+                    const chatPanel = document.getElementById('call-chat');
+                    if (chatPanel) {
+                        const isVisible = chatPanel.style.display !== 'none';
+                        chatPanel.style.display = isVisible ? 'none' : 'flex';
+                    }
+                });
+            }
+            
+            // Send chat message
+            const sendButton = document.getElementById('send-call-chat');
+            if (sendButton) {
+                sendButton.addEventListener('click', sendCallChatMessage);
+            }
+            
+            const chatInput = document.getElementById('call-chat-message');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendCallChatMessage();
+                    }
+                });
+            }
+            
+            // Function to send chat message
+            function sendCallChatMessage() {
+                const messageInput = document.getElementById('call-chat-message');
+                if (!messageInput) return;
+                
+                const message = messageInput.value.trim();
+                if (!message) return;
+                
+                // Display user message
+                showCallChatMessage(message, 'user');
+                messageInput.value = '';
+                
+            
+                setTimeout(() => {
+                    const responses = [
+                        "I understand how you feel. Can you tell me more about that?",
+                        "That's important to address. How long have you been experiencing this?",
+                        "Thank you for sharing. What strategies have you tried so far?",
+                        "I'm listening. How does this affect your daily life?",
+                        "I'm here to help you work through this. Let's discuss some strategies."
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    showCallChatMessage(randomResponse, 'doctor');
+                }, 2000);
+            }
+        }
+        
+        // Initialize settings modal functionality
+        initSettingsModal();
+        
+        function initSettingsModal() {
+            const settingsBtn = document.getElementById('settings-btn');
+            const profileSettingsModal = document.getElementById('profile-settings-modal');
+            const closeModal = document.querySelector('.close-modal');
+            const saveSettingsBtn = document.getElementById('save-settings');
+            const cancelSettingsBtn = document.getElementById('cancel-settings');
+            
+            // Open settings
+            if (settingsBtn) {
+                settingsBtn.addEventListener('click', function() {
+                    if (profileSettingsModal) {
+                        // Show doctor photo selection
+                        const doctorPhotoSection = document.querySelector('.doctor-photo-section');
+                        if (doctorPhotoSection) doctorPhotoSection.style.display = 'block';
+                        
+                        // Show the modal
+                        profileSettingsModal.style.display = 'flex';
+                    }
+                });
+            }
+            
+            // Close modal
+            if (closeModal) {
+                closeModal.addEventListener('click', function() {
+                    if (profileSettingsModal) profileSettingsModal.style.display = 'none';
+                    stopCameraPreview();
+                });
+            }
+            
+            // Cancel settings
+            if (cancelSettingsBtn) {
+                cancelSettingsBtn.addEventListener('click', function() {
+                    if (profileSettingsModal) profileSettingsModal.style.display = 'none';
+                    stopCameraPreview();
+                });
+            }
+            
+            // Save settings
+            if (saveSettingsBtn) {
+                saveSettingsBtn.addEventListener('click', function() {
+                    const currentProfilePhoto = document.getElementById('current-profile-photo');
+                    const userPlaceholder = document.getElementById('user-placeholder');
+                    
+                    // Save profile photo
+                    if (currentProfilePhoto) {
+                        const photoUrl = currentProfilePhoto.src;
+                        localStorage.setItem('mindcare_user_photo', photoUrl);
+                        
+                        // Update display
+                        if (userPlaceholder) userPlaceholder.src = photoUrl;
+                    }
+                    
+                    // Update doctor photo if changed
+                    const selectedDoctorPhoto = document.querySelector('.doctor-photo-option.selected');
+                    if (selectedDoctorPhoto) {
+                        const doctorPlaceholder = document.getElementById('doctor-placeholder');
+                        if (doctorPlaceholder) doctorPlaceholder.src = selectedDoctorPhoto.src;
+                    }
+                    
+                    // Close modal
+                    if (profileSettingsModal) profileSettingsModal.style.display = 'none';
+                    stopCameraPreview();
+                });
+            }
+            
+            // Photo upload
+            const photoUpload = document.getElementById('profile-photo-upload');
+            if (photoUpload) {
+                photoUpload.addEventListener('change', function(e) {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        const currentProfilePhoto = document.getElementById('current-profile-photo');
+                        
+                        reader.onload = function(e) {
+                            if (currentProfilePhoto) currentProfilePhoto.src = e.target.result;
+                        };
+                        
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            }
+            
+            // Take photo with camera
+            const takePhotoBtn = document.getElementById('take-photo-btn');
+            const cameraContainer = document.getElementById('camera-container');
+            
+            if (takePhotoBtn) {
+                takePhotoBtn.addEventListener('click', function() {
+                    if (cameraContainer) cameraContainer.style.display = 'block';
+                    
+                    // Start camera
+                    const cameraPreview = document.getElementById('camera-preview');
+                    if (cameraPreview) {
+                        navigator.mediaDevices.getUserMedia({ video: true })
+                            .then(stream => {
+                                window.cameraStream = stream;
+                                cameraPreview.srcObject = stream;
+                            })
+                            .catch(err => {
+                                console.error('Camera access error:', err);
+                                alert('Unable to access camera. Please check your permissions.');
+                                if (cameraContainer) cameraContainer.style.display = 'none';
+                            });
+                    }
+                });
+            }
+            
+            // Capture photo
+            const capturePhotoBtn = document.getElementById('capture-photo');
+            if (capturePhotoBtn) {
+                capturePhotoBtn.addEventListener('click', function() {
+                    const cameraPreview = document.getElementById('camera-preview');
+                    const currentProfilePhoto = document.getElementById('current-profile-photo');
+                    
+                    if (cameraPreview && currentProfilePhoto) {
+                        // Create canvas to capture image
+                        const canvas = document.createElement('canvas');
+                        canvas.width = cameraPreview.videoWidth;
+                        canvas.height = cameraPreview.videoHeight;
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Draw video frame to canvas
+                        ctx.drawImage(cameraPreview, 0, 0, canvas.width, canvas.height);
+                        
+                        // Get image data URL
+                        const imageDataURL = canvas.toDataURL('image/png');
+                        currentProfilePhoto.src = imageDataURL;
+                    }
+                    
+                    // Stop camera
+                    stopCameraPreview();
+                });
+            }
+            
+            // Cancel camera
+            const cancelCameraBtn = document.getElementById('cancel-camera');
+            if (cancelCameraBtn) {
+                cancelCameraBtn.addEventListener('click', stopCameraPreview);
+            }
+            
+            // Doctor photo selection
+            const doctorPhotoOptions = document.querySelectorAll('.doctor-photo-option');
+            doctorPhotoOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selection from all options
+                    doctorPhotoOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selection to this option
+                    this.classList.add('selected');
+                });
+            });
+        }
+        
+        // Function to stop camera preview
+        function stopCameraPreview() {
+            if (window.cameraStream) {
+                window.cameraStream.getTracks().forEach(track => track.stop());
+                window.cameraStream = null;
+            }
+            
+            const cameraContainer = document.getElementById('camera-container');
+            if (cameraContainer) cameraContainer.style.display = 'none';
+        }
+        
+        console.log('Video consultation module initialized');
+    }
+
+    // Initialize authentication form toggles
+    function initAuthFormToggles() {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const forgotPasswordForm = document.getElementById('forgot-password-form');
+        
+        // Show login
+        const showLogin = document.getElementById('show-login');
+        if (showLogin) {
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (loginForm) loginForm.style.display = 'block';
+                if (registerForm) registerForm.style.display = 'none';
+                if (forgotPasswordForm) forgotPasswordForm.style.display = 'none';
+            });
+        }
+        
+        // Show register
+        const showRegister = document.getElementById('show-register');
+        if (showRegister) {
+            showRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (loginForm) loginForm.style.display = 'none';
+                if (registerForm) registerForm.style.display = 'block';
+                if (forgotPasswordForm) forgotPasswordForm.style.display = 'none';
+            });
+        }
+        
+        const showForgotPassword = document.getElementById('show-forgot-password');
+        if (showForgotPassword) {
+            showForgotPassword.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (loginForm) loginForm.style.display = 'none';
+                if (registerForm) registerForm.style.display = 'none';
+                if (forgotPasswordForm) forgotPasswordForm.style.display = 'block';
+            });
+        }
+        
+        
+        const backToLogin = document.getElementById('back-to-login');
+        if (backToLogin) {
+            backToLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (loginForm) loginForm.style.display = 'block';
+                if (registerForm) registerForm.style.display = 'none';
+                if (forgotPasswordForm) forgotPasswordForm.style.display = 'none';
+            });
+        }
+        
+        console.log('Auth form toggles initialized');
+    }
+
+    function getResponse(userMessage) {
+        // Convert to lowercase for easier matching
+        const message = userMessage.toLowerCase();
+        
+        // Check for specific keywords
+        if (message.includes('sad') || message.includes('depress')) {
+            return "I understand. Consider listening to some music from our library or scheduling a consultation with one of our professionals.";
+        } else if (message.includes('anxious') || message.includes('anxiety') || message.includes('worried')) {
+            return "There are techniques that might help. Our breathing exercises in the video resources section could be beneficial.";
+        } else if (message.includes('stressed') || message.includes('overwhelmed')) {
+            return "When you're feeling this way, taking small breaks and practicing self-care can help. Have you tried our meditation tracks?";
+        } else if (message.includes('sleep') || message.includes('tired') || message.includes('insomnia')) {
+            return "Sleep issues can affect your wellbeing. Our sleep sounds in the music section might help create a better sleep environment.";
+        } else if (message.includes('hello') || message.includes('hi')) {
+            return "Hello! How can I help you today?";
+        } else if (message.includes('thank')) {
+            return "You're welcome! I'm glad to be able to support you.";
+        } else {
+            return "I'm here to listen. Would you like to explore our music library, video resources, or schedule a consultation with a professional?";
+        }
+    }
+</script>
+</body>
+</html>
+
