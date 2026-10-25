@@ -1,0 +1,7 @@
+{
+  "name": "mindcare-demo",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {"test": "node --test security.test.cjs"},
+  "devDependencies": {"jsdom": "26.1.0"}
+}

@@ -1047,74 +1047,20 @@
             <p>Your Mental Health Companion</p>
         </div>
         
+        <aside role="note" style="padding:16px;border:1px solid #888;border-radius:10px;margin-bottom:20px">
+            <strong>Educational demo.</strong> Chat replies are predefined. Consultation screens simulate a call and do not connect to a professional. Do not enter personal or health information.
+        </aside>
         <div class="auth-container" id="auth-container">
-            <h2>Welcome to MindCare</h2>
-            
-            <div id="login-form">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="Enter your password">
-                </div>
-                <div id="login-error" style="color: var(--error-color); margin-bottom: 15px; font-size: 0.9rem;"></div>
-                <button id="login-btn" class="btn btn-block">Sign In</button>
-                <div class="auth-switch">
-                    Don't have an account? <a href="#" id="show-register">Create Account</a>
-                </div>
-                <div class="auth-switch">
-                    <a href="#" id="show-forgot-password" class="btn-link">Forgot Password?</a>
-                </div>
-            </div>
-            
-            <div id="register-form" style="display: none;">
-                <div class="form-group">
-                    <label for="register-name">Full Name</label>
-                    <input type="text" id="register-name" placeholder="Enter your full name">
-                </div>
-                <div class="form-group">
-                    <label for="register-email">Email</label>
-                    <input type="email" id="register-email" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label for="register-phone">Phone Number</label>
-                    <input type="text" id="register-phone" placeholder="Enter your phone number">
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Password</label>
-                    <input type="password" id="register-password" placeholder="Create a password">
-                </div>
-                <div class="form-group">
-                    <label for="register-confirm-password">Confirm Password</label>
-                    <input type="password" id="register-confirm-password" placeholder="Confirm your password">
-                </div>
-                <div id="register-error" style="color: var(--error-color); margin-bottom: 15px; font-size: 0.9rem;"></div>
-                <button id="register-btn" class="btn btn-block">Create Account</button>
-                <div class="auth-switch">
-                    Already have an account? <a href="#" id="show-login">Sign In</a>
-                </div>
-            </div>
-            
-            <div id="forgot-password-form" style="display: none;">
-                <div class="form-group">
-                    <label for="forgot-email">Email</label>
-                    <input type="email" id="forgot-email" placeholder="Enter your registered email">
-                </div>
-                <div id="forgot-error" style="color: var(--error-color); margin-bottom: 10px; font-size: 0.9rem;"></div>
-                <div id="forgot-success" style="color: var(--success-color); margin-bottom: 15px; font-size: 0.9rem;"></div>
-                <button id="forgot-btn" class="btn btn-block">Reset Password</button>
-                <div class="auth-switch">
-                    <a href="#" id="back-to-login" class="btn-link">Back to Sign In</a>
-                </div>
-            </div>
+            <h2>Explore MindCare</h2>
+            <p>No account or password is needed. Your demo session stays in this page.</p>
+            <button id="login-btn" class="btn btn-block" style="margin-top:20px">Enter demo</button>
+            <button id="clear-legacy-data" class="btn btn-secondary btn-block" style="margin-top:10px">Clear data from older demos</button>
+            <p id="legacy-data-status" role="status"></p>
         </div>
-        
         <div id="features-container" style="display: none;">
             <div class="header">
                 <div style="display: flex; align-items: center; margin-top: 10px;">
-                    <button id="logout-btn" class="btn">Logout</button>
+                    <button id="logout-btn" class="btn">Exit demo</button>
                 </div>
             </div>
             
@@ -1122,13 +1068,13 @@
                 <div class="feature-card" id="open-chat">
                     <div class="feature-icon">💬</div>
                     <h3>Support Chat</h3>
-                    <p>Get guidance and personalized recommendations from our support team.</p>
+                    <p>Explore predefined chat replies in this frontend demonstration.</p>
                 </div>
                 
                 <div class="feature-card" id="schedule-call">
                     <div class="feature-icon">📞</div>
                     <h3>Video Call</h3>
-                    <p>Schedule calls with licensed professionals for personalized care.</p>
+                    <p>Explore a simulated consultation interface. No professional is connected.</p>
                 </div>
                 
                 <div class="feature-card" id="music-therapy">
@@ -1951,152 +1897,18 @@
     const usernameDisplay = document.getElementById('username-display');
     
     
-    document.getElementById('show-register').addEventListener('click', function(e) {
-        e.preventDefault();
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        forgotPasswordForm.style.display = 'none';
+    document.getElementById('clear-legacy-data').addEventListener('click', function() {
+        for (const key of ['mindcare_users','mindcare_current_user','mindcare_user_photo']) localStorage.removeItem(key);
+        document.getElementById('legacy-data-status').textContent = 'Older demo data cleared from this browser.';
     });
-    
-    document.getElementById('show-login').addEventListener('click', function(e) {
-        e.preventDefault();
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        forgotPasswordForm.style.display = 'none';
-    });
-    
-    document.getElementById('show-forgot-password').addEventListener('click', function(e) {
-        e.preventDefault();
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'none';
-        forgotPasswordForm.style.display = 'block';
-    });
-    
-    document.getElementById('back-to-login').addEventListener('click', function(e) {
-        e.preventDefault();
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        forgotPasswordForm.style.display = 'none';
-    });
-    
-
     document.getElementById('login-btn').addEventListener('click', function() {
-        const email = document.getElementById('login-email').value.trim();
-        const password = document.getElementById('login-password').value;
-        const errorElement = document.getElementById('login-error');
-        
-        if (!email || !password) {
-            errorElement.textContent = 'Please fill in all fields';
-            return;
-        }
-        
-        const users = JSON.parse(localStorage.getItem('mindcare_users') || '[]');
-        const user = users.find(u => u.email === email && u.password === password);
-        
-        if (user) {
-            
-            currentUser = {
-                id: user.id,
-                name: user.name,
-                email: user.email
-            };
-            localStorage.setItem('mindcare_current_user', JSON.stringify(currentUser));
-            
-            
-            showFeaturesInterface();
-        } else {
-            errorElement.textContent = 'Invalid email or password';
-        }
-    });
-    
-    
-    document.getElementById('register-btn').addEventListener('click', function() {
-        const name = document.getElementById('register-name').value.trim();
-        const email = document.getElementById('register-email').value.trim();
-        const phone = document.getElementById('register-phone').value.trim();
-        const password = document.getElementById('register-password').value;
-        const confirmPassword = document.getElementById('register-confirm-password').value;
-        const errorElement = document.getElementById('register-error');
-        
-        if (!name || !email || !phone || !password || !confirmPassword) {
-            errorElement.textContent = 'Please fill in all fields';
-            return;
-        }
-        
-        if (password !== confirmPassword) {
-            errorElement.textContent = 'Passwords do not match';
-            return;
-        }
-        
-        
-        const users = JSON.parse(localStorage.getItem('mindcare_users') || '[]');
-        
-        if (users.some(u => u.email === email)) {
-            errorElement.textContent = 'Email is already registered';
-            return;
-        }
-        
-        const newUser = {
-            id: Date.now().toString(),
-            name,
-            email,
-            phone,
-            password
-        };
-        
-        users.push(newUser);
-        localStorage.setItem('mindcare_users', JSON.stringify(users));
-        
-    
-        currentUser = {
-            id: newUser.id,
-            name: newUser.name,
-            email: newUser.email
-        };
-        
-        localStorage.setItem('mindcare_current_user', JSON.stringify(currentUser));
-        
-        
+        currentUser = {name:'Demo visitor'};
         showFeaturesInterface();
     });
-    
-    
-    document.getElementById('forgot-btn').addEventListener('click', function() {
-        const email = document.getElementById('forgot-email').value.trim();
-        const errorElement = document.getElementById('forgot-error');
-        const successElement = document.getElementById('forgot-success');
-        
-        if (!email) {
-            errorElement.textContent = 'Please enter your email';
-            successElement.textContent = '';
-            return;
-        }
-        
-        
-        const users = JSON.parse(localStorage.getItem('mindcare_users') || '[]');
-        const user = users.find(u => u.email === email);
-        
-        if (user) {
-            errorElement.textContent = '';
-            successElement.textContent = 'Password reset instructions sent to your email';
-            
-            
-            
-        
-            setTimeout(() => {
-                loginForm.style.display = 'block';
-                forgotPasswordForm.style.display = 'none';
-                successElement.textContent = '';
-            }, 3000);
-        } else {
-            errorElement.textContent = 'Email not found';
-            successElement.textContent = '';
-        }
-    });
-    
+
     // Logout functionality
     document.getElementById('logout-btn').addEventListener('click', function() {
-        localStorage.removeItem('mindcare_current_user');
+        currentUser = null;
         showAuthInterface();
     });
     
@@ -2105,15 +1917,7 @@
         authContainer.style.display = 'block';
         featuresContainer.style.display = 'none';
         
-        // Reset forms
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        forgotPasswordForm.style.display = 'none';
-        
-        // Clear inputs
-        document.getElementById('login-email').value = '';
-        document.getElementById('login-password').value = '';
-        document.getElementById('login-error').textContent = '';
+
     }
     
     // Show features interface
@@ -2215,11 +2019,12 @@
             // Add user message to chat
             const userMsgDiv = document.createElement('div');
             userMsgDiv.className = 'message user';
-            userMsgDiv.innerHTML = `
-                <div class="message-content">
-                    <p>${message}</p>
-                </div>
-            `;
+            const userMsgDivContent = document.createElement('div');
+            userMsgDivContent.className = 'message-content';
+            const userMsgDivText = document.createElement('p');
+            userMsgDivText.textContent = message;
+            userMsgDivContent.appendChild(userMsgDivText);
+            userMsgDiv.appendChild(userMsgDivContent);
             chatMessages.appendChild(userMsgDiv);
             
             // Clear input
@@ -2235,11 +2040,12 @@
                 // Add bot message to chat
                 const botMsgDiv = document.createElement('div');
                 botMsgDiv.className = 'message bot';
-                botMsgDiv.innerHTML = `
-                    <div class="message-content">
-                        <p>${response}</p>
-                    </div>
-                `;
+                const botMsgDivContent = document.createElement('div');
+            botMsgDivContent.className = 'message-content';
+            const botMsgDivText = document.createElement('p');
+            botMsgDivText.textContent = response;
+            botMsgDivContent.appendChild(botMsgDivText);
+            botMsgDiv.appendChild(botMsgDivContent);
                 chatMessages.appendChild(botMsgDiv);
                 
                 // Auto scroll to bottom
@@ -2361,6 +2167,7 @@
             button.addEventListener('click', function() {
                 const video = this.closest('.video');
                 const videoId = video.dataset.embed;
+                if (!/^[A-Za-z0-9_-]{11}$/.test(videoId || '')) return;
                 
                 // Create YouTube embed
                 videoPlayer.innerHTML = `
@@ -2375,13 +2182,7 @@
     
     // Check if user is already logged in
     function checkLoggedInUser() {
-        const savedUser = localStorage.getItem('mindcare_current_user');
-        if (savedUser) {
-            currentUser = JSON.parse(savedUser);
-            showFeaturesInterface();
-        } else {
-            showAuthInterface();
-        }
+        showAuthInterface();
     }
     
     // Initialize app
@@ -3128,4 +2929,5 @@
 </script>
 </body>
 </html>
+
 
